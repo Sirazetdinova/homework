@@ -199,7 +199,7 @@ class Shares(Investments):
 
     @buying_securities
     def buying(self):
-        if self.profit > 6:
+        if self.profit > 5:
             lot = int(input('Количество (лот 10): '))
             print(f'Совершена покупка на сумму: {self.price*lot}. Поздравляю Вы стали совладельцем компании!')
         else:
