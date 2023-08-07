@@ -1,105 +1,102 @@
 # Наследование
 
 ## Задача 1
+```python
+class HeavenlyBody:
+    'Родительский класс Planet'
 
-  ```python
-  class HeavenlyBody:
-      'Родительский класс Planet'
-  
-      def __init__(self, name, age, temperature, radius):
-          self.name = name
-          self.age = age
-          self.temperature = temperature
-          self.radius = radius
-  
-      def display(self):
-          print(f'Название: {self.name}')
-          print(f'Возраст: {self.age} (млн. лет)')
-          print(f'Температура: {self.temperature} (С)')
-          print(f'Радиус: {self.radius} (км)')
-  
-  class Planet(HeavenlyBody):
-      'Дочерний класс Planet'
-  
-      def __init__(self, name, age, temperature, radius, orbital_speed):
-          super().__init__(name, age, temperature, radius)
-          self.orbital_speed = orbital_speed
-  
-      def display(self):
-          super().display()
-          print(f'Орбитальная скорость: {self.orbital_speed} (км/с) \n')
-  
-  class Star(HeavenlyBody):
-      'Дочерний класс Star'
-  
-      def __init__(self, name, age, temperature, radius, constellation):
-          super().__init__(name, age, temperature, radius)
-          self.constellation = constellation
-  
-      def display(self):
-          super().display()
-          print(f'Созвездие: {self.constellation} \n')
-  ```
+    def __init__(self, name, age, temperature, radius):
+        self.name = name
+        self.age = age
+        self.temperature = temperature
+        self.radius = radius
+
+    def display(self):
+        print(f'Название: {self.name}')
+        print(f'Возраст: {self.age} (млн. лет)')
+        print(f'Температура: {self.temperature} (С)')
+        print(f'Радиус: {self.radius} (км)')
+
+class Planet(HeavenlyBody):
+    'Дочерний класс Planet'
+
+    def __init__(self, name, age, temperature, radius, orbital_speed):
+        super().__init__(name, age, temperature, radius)
+        self.orbital_speed = orbital_speed
+
+    def display(self):
+        super().display()
+        print(f'Орбитальная скорость: {self.orbital_speed} (км/с) \n')
+
+class Star(HeavenlyBody):
+    'Дочерний класс Star'
+
+    def __init__(self, name, age, temperature, radius, constellation):
+        super().__init__(name, age, temperature, radius)
+        self.constellation = constellation
+
+    def display(self):
+        super().display()
+        print(f'Созвездие: {self.constellation} \n')
+```
 
 ## Задача 2
+```python
+import datetime
 
-   ```python
-    import datetime
-    
-    class Pastry:
-        def __init__(self, name, price, manufacture_date, term):
-            self.id = id(self)
-            self.name = name
-            self.price = price
-            self.manufacture_date = manufacture_date
-            self.term = term
-    
-        def display(self):
-            print(f'Название: {self.name}')
-            print(f'Цена: {self.price} (руб.)')
-            print(f'Дата изготовления: {self.manufacture_date}')
-    
-        def valid_until(self):
-            today = datetime.date.today()
-            end_date = self.manufacture_date + datetime.timedelta(days=self.term)
-            remaining_time = end_date - today
-            if remaining_time.days < 0:
-                return 'Срок годности истек'
-            else:
-                return 'Срок годности истекает через {} дня'.format(remaining_time.days)
-    
-    class Cake(Pastry):
-        def __init__(self, name, price, manufacture_date, term, filling):
-            super().__init__(name, price, manufacture_date, term)
-            self.filling = filling
-    
-        def order(self):
-            Cake.display(self)
-            print(f'Начинка: {self.filling}')
-            if Cake.valid_until(self) != 'Срок годности истек':
-                print(Cake.valid_until(self))
-                print(f'Оформлен заказ {self.id} - {self.name} с начинкой {self.filling} \n')
-            else:
-                print('Нет в наличии! Выберите другую позицию')
-    
-    class Cupcake(Pastry):
-        def __init__(self, name, price, manufacture_date, term, amount):
-            super().__init__(name, price, manufacture_date, term)
-            self.amount = amount
-    
-        def order(self):
-            if Cupcake.valid_until(self) != 'Срок годности истек':
-                Cupcake.display(self)
-                print(f'Количество: {self.amount}')
-                print(Cupcake.valid_until(self))
-                print(f'Оформлен заказ {self.id} - {self.name}, необходимое количество {self.amount} \n')
-            else:
-                print('Нет в наличии! Выберите другую позицию')
-  ```
+class Pastry:
+    def __init__(self, name, price, manufacture_date, term):
+        self.id = id(self)
+        self.name = name
+        self.price = price
+        self.manufacture_date = manufacture_date
+        self.term = term
+
+    def display(self):
+        print(f'Название: {self.name}')
+        print(f'Цена: {self.price} (руб.)')
+        print(f'Дата изготовления: {self.manufacture_date}')
+
+    def valid_until(self):
+        today = datetime.date.today()
+        end_date = self.manufacture_date + datetime.timedelta(days=self.term)
+        remaining_time = end_date - today
+        if remaining_time.days < 0:
+            return 'Срок годности истек'
+        else:
+            return 'Срок годности истекает через {} дня'.format(remaining_time.days)
+
+class Cake(Pastry):
+    def __init__(self, name, price, manufacture_date, term, filling):
+        super().__init__(name, price, manufacture_date, term)
+        self.filling = filling
+
+    def order(self):
+        Cake.display(self)
+        print(f'Начинка: {self.filling}')
+        if Cake.valid_until(self) != 'Срок годности истек':
+            print(Cake.valid_until(self))
+            print(f'Оформлен заказ {self.id} - {self.name} с начинкой {self.filling} \n')
+        else:
+            print('Нет в наличии! Выберите другую позицию')
+
+class Cupcake(Pastry):
+    def __init__(self, name, price, manufacture_date, term, amount):
+        super().__init__(name, price, manufacture_date, term)
+        self.amount = amount
+
+    def order(self):
+        if Cupcake.valid_until(self) != 'Срок годности истек':
+            Cupcake.display(self)
+            print(f'Количество: {self.amount}')
+            print(Cupcake.valid_until(self))
+            print(f'Оформлен заказ {self.id} - {self.name}, необходимое количество {self.amount} \n')
+        else:
+            print('Нет в наличии! Выберите другую позицию')
+```
 
 ## Задача 3
-
-   ```python
+```python
 class BankAccount:
     def __init__(self, holder, balance, interest_rate):
         self.__holder = holder
@@ -150,7 +147,6 @@ class BankOperation(BankAccount):
 
 1) Каждый метод `__init__` вызывался только один раз.
 Класс Copier унаследован от двух дочерних классов Scanner и Printer, которые, в свою очередь, унаследованы от родительского класса `ComputerDevice`. `ComputerDevice.__init__` не вызывался дважды, потому что мы использовали вызов функции `super()`. В случае, если будет использован другой способ множественного наследования, то метод `ComputerDevice.__init__` будет вызываться в классе `ComputerDevice` два раза. 
-
 ```python
   class Copier(Scanner, Printer):
       '''Copy process'''
