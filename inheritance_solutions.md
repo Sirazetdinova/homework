@@ -3,7 +3,7 @@
 ## Задача 1
 
   ```python
-  class Heavenly_body:
+  class HeavenlyBody:
       'Родительский класс Planet'
   
       def __init__(self, name, age, temperature, radius):
@@ -18,7 +18,7 @@
           print(f'Температура: {self.temperature} (С)')
           print(f'Радиус: {self.radius} (км)')
   
-  class Planet(Heavenly_body):
+  class Planet(HeavenlyBody):
       'Дочерний класс Planet'
   
       def __init__(self, name, age, temperature, radius, orbital_speed):
@@ -29,7 +29,7 @@
           super().display()
           print(f'Орбитальная скорость: {self.orbital_speed} (км/с) \n')
   
-  class Star(Heavenly_body):
+  class Star(HeavenlyBody):
       'Дочерний класс Star'
   
       def __init__(self, name, age, temperature, radius, constellation):
