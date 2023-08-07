@@ -247,8 +247,11 @@ class Investments:
         self.currency = currency
         self.industry = industry
 
-    def __str__(self):
-        return f"{self.ticker} ({self.price} {self.currency})"
+    def display(self):
+        print(f'Тикер: {self.ticker}')
+        print(f'Цена: {self.price}')
+        print(f'Валюта: {self.currency}')
+        print(f'Сектор: {self.industry}')
 
     @abstractmethod
     def buying(self):
@@ -257,11 +260,12 @@ class Investments:
 def buying_securities(func):
     def wrapper(security):
         if security.echelon == 3:
-            print('Это высокорискованная сделка')
+            print('Это высокорискованная сделка \n')
             return None
         return func(security)
 
     return wrapper
+
 
 class Shares(Investments):
     def __init__(self, ticker, price, currency, industry, dividend, echelon, profit):
@@ -273,10 +277,10 @@ class Shares(Investments):
     @buying_securities
     def buying(self):
         if self.profit > 6:
-            lot = input('Количество (лот 10): ')
+            lot = int(input('Количество (лот 10): '))
             print(f'Совершена покупка на сумму: {self.price*lot}. Поздравляю Вы стали совладельцем компании!')
         else:
-            print('Это высокорискованная сделка')
+            print('Это высокорискованная сделка \n')
 
 
 class Bonds(Investments):
@@ -292,5 +296,5 @@ class Bonds(Investments):
             lot = int(input('Количество (лот 10): '))
             print(f'Совершена покупка на сумму: {self.price * lot}. Поздравляю Вы стали кредитором компании!')
         else:
-            print('Это высокорискованная сделка')
+            print('Это высокорискованная сделка \n')
 ```
