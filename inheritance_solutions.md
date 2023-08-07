@@ -41,7 +41,6 @@
           print(f'Созвездие: {self.constellation} \n')
   ```
 
-
 ## Задача 2
 
    ```python
@@ -98,7 +97,6 @@
                 print('Нет в наличии! Выберите другую позицию')
   ```
 
-
 ## Задача 3
 
    ```python
@@ -148,7 +146,6 @@ class BankOperation(BankAccount):
             print(transaction)
 ```
 
-
 ## Задача 4
 
 1) Каждый метод `__init__` вызывался только один раз.
@@ -163,78 +160,8 @@ class BankOperation(BankAccount):
           Printer.__init__(self, inf)
 ```
 
-2) Каждый метод `__init__` был запущен до того, как любой из других был завершен.
+2) Каждый метод `__init__` был запущен до того, как любой из других был завершен. Важно обращать внимание на момент начала и окончания каждого магического метода `__init__`. В случае, если вы попытаетесь установить атрибут, имя которого конфликтует с другим атрибутом родительского класса, то атрибут будет перезаписан и могут возникнуть ошибки. В данной программе нет конфликта имен с унаследованными атрибутами, поэтому все работает как положено.
 
-Важно обращать внимание на момент начала и окончания каждого магического метода `__init__`. В случае, если вы попытаетесь установить атрибут, имя которого конфликтует с другим атрибутом родительского класса, то атрибут будет перезаписан и могут возникнуть ошибки. В данной программе нет конфликта имен с унаследованными атрибутами, поэтому все работает как положено.
-
-
-## Задача 5
-  
-```python
-   from abc import ABC, abstractmethod
-
-class Investments:
-    def __init__(self, ticker, price, currency, industry):
-        self.ticker = ticker
-        self.price = price
-        self.currency = currency
-        self.industry = industry
-
-    def __str__(self):
-        return f"{self.ticker} ({self.price} {self.currency})"
-
-    @abstractmethod
-    def buying(self):
-        pass
-
-def buying_securities(func):
-    def wrapper(security):
-        if security.echelon == 3:
-            print('Это высокорискованная сделка')
-            return None
-        return func(security)
-    return wrapper
-
-class Shares(Investments):
-    def __init__(self, ticker, price, currency, industry, dividend, echelon, profit):
-        super().__init__(ticker, price, currency, industry)
-        self.dividend = dividend
-        self.echelon = echelon
-        self.profit = profit
-
-    @buying_securities
-    def buying(self):
-        if self.profit > 6:
-            lot = input('Количество (лот 10): ')
-            return f'Совершена покупка на сумму: {self.price*lot}. Поздравляю Вы стали совладельцем компании!'
-
-
-class Bonds(Investments):
-    def __init__(self, ticker, price, currency, industry, coupon, echelon, nominal):
-        super().__init__(ticker, price, currency, industry)
-        self.coupon = coupon
-        self.echelon = echelon
-        self.nominal = nominal
-
-    @buying_securities
-    def buying(self):
-        if self.price <= self.nominal:
-            lot = input('Количество (лот 10): ')
-            return f'Совершена покупка на сумму: {self.price * lot}. Поздравляю Вы стали кредитором компании!'
-
-
-i1 = Shares('GAZP', 174.09, 'RUB', 'Энергетика', True, 1, 1.83)
-i2 = Shares('KROT', 2306.80, 'RUB', 'Финансы', True, 3, 701.93)
-i3 = Bonds('ОФЗ-26233', 688.75, 'RUB', 'Государственные', 6.1, 1, 1000)
-i4 = Bonds('GTLC-3', 1002.3, 'RUB', 'Финансы', 6.95, 3, 1000)
-
-list1 = [i1,i2,i3,i4]
-
-for security in list1:
-    print(security.buying())
-
-# Данная информация не является индивидуальной инвестиционной рекомендацией, и финансовые инструменты либо операции, упомянутые в ней, могут не соответствовать Вашему инвестиционному профилю и инвестиционным целям (ожиданиям).
-```
 
 ## Задача 5
 ```python
