@@ -235,3 +235,62 @@ for security in list1:
 
 # Данная информация не является индивидуальной инвестиционной рекомендацией, и финансовые инструменты либо операции, упомянутые в ней, могут не соответствовать Вашему инвестиционному профилю и инвестиционным целям (ожиданиям).
 ```
+
+## Задача 5
+```python
+from abc import ABC, abstractmethod
+
+class Investments:
+    def __init__(self, ticker, price, currency, industry):
+        self.ticker = ticker
+        self.price = price
+        self.currency = currency
+        self.industry = industry
+
+    def __str__(self):
+        return f"{self.ticker} ({self.price} {self.currency})"
+
+    @abstractmethod
+    def buying(self):
+        pass
+
+def buying_securities(func):
+    def wrapper(security):
+        if security.echelon == 3:
+            print('Это высокорискованная сделка')
+            return None
+        return func(security)
+
+    return wrapper
+
+class Shares(Investments):
+    def __init__(self, ticker, price, currency, industry, dividend, echelon, profit):
+        super().__init__(ticker, price, currency, industry)
+        self.dividend = dividend
+        self.echelon = echelon
+        self.profit = profit
+
+    @buying_securities
+    def buying(self):
+        if self.profit > 6:
+            lot = input('Количество (лот 10): ')
+            print(f'Совершена покупка на сумму: {self.price*lot}. Поздравляю Вы стали совладельцем компании!')
+        else:
+            print('Это высокорискованная сделка')
+
+
+class Bonds(Investments):
+    def __init__(self, ticker, price, currency, industry, coupon, echelon, nominal):
+        super().__init__(ticker, price, currency, industry)
+        self.coupon = coupon
+        self.echelon = echelon
+        self.nominal = nominal
+
+    @buying_securities
+    def buying(self):
+        if self.price <= self.nominal:
+            lot = int(input('Количество (лот 10): '))
+            print(f'Совершена покупка на сумму: {self.price * lot}. Поздравляю Вы стали кредитором компании!')
+        else:
+            print('Это высокорискованная сделка')
+```
