@@ -104,7 +104,7 @@
 ## Задача 4
 
 ```python
-class Geometric_figures:
+class GeometricFigures:
     def __init__(self, figures):
         self.figures = figures
 
@@ -115,7 +115,7 @@ class Geometric_figures:
         for figure in self.figures:
             figure.get_perimeter()
 
-class Triangle(Geometric_figures):
+class Triangle(GeometricFigures):
     def __init__(self, a, b, c):
         self.a = a
         self.b = b
@@ -127,7 +127,7 @@ class Triangle(Geometric_figures):
     def get_perimeter(self):
         return f'Периметр равен: {self.a + self.b + self.c}'
 
-class Square(Geometric_figures):
+class Square(GeometricFigures):
     def __init__(self, side):
         self.side = side
 
@@ -137,7 +137,7 @@ class Square(Geometric_figures):
     def get_perimeter(self):
         return f'Периметр равен: {4*self.side}'
 
-class Rectangle(Geometric_figures):
+class Rectangle(GeometricFigures):
     def __init__(self, a, b):
         self.a = a
         self.b = b
