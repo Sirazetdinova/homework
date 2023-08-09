@@ -13,8 +13,7 @@
 
 **Пример использования:**
 
-```python
-if __name__ == '__main__':   
+```python 
   book1 = Autobiography('К черту все! Берись и делай!', 'Ричард Брэнсон')
   book2 = Psychology('Биология добра и зла', 'Роберт Сапольски')
   book3 = Fantasy('Песнь льда и пламени', 'Джордж Реймонд Ричард Мартин')
@@ -59,7 +58,6 @@ def feed(bird: Bird):
 
 **Пример использования:**
 ```python
-if __name__ == '__main__':
   feed(Duck())
   feed(Mouse())
 ```
@@ -89,7 +87,6 @@ Feeding the mouse bread crumbs
 
 **Пример использования:**
 ```python
-if __name__ == '__main__':
   student1 = Student('Ваня')
   teacher = Teacher('Александр Романович')
   mentor1 = Mentor('Илья')
@@ -132,13 +129,12 @@ if __name__ == '__main__':
 
 ## Задача 4
 
-Создайте базовый класс `Geometric_figures`, который содержит атрибут `figures` и два метода `get_perimeter()`, а также `get_all_perimeter()`. 
+Создайте базовый класс `GeometricFigures`, который содержит атрибут `figures` и два метода `get_perimeter()`, а также `get_all_perimeter()`. 
 Затем создайте три дочерних класса `Triangle`, `Square` и `Rectangle`, каждый из которых реализует метод `get_perimeter()` и переопределяет метод `__str__`. 
 Выведите на экран метод `get_perimeter()` для отображения периметра каждой геометрической фигуры.
 
 **Пример использования:**
-```python
-if __name__ == '__main__':       
+```python       
   figures = [Triangle(1,2,3), Triangle(4,5,6),
       Square(10), Square(20),
       Rectangle(6,7), Rectangle(7,8)]
@@ -176,8 +172,7 @@ if __name__ == '__main__':
 
 **Пример использования:**
 
-```python
-if __name__ == '__main__':  
+```python  
   sa = SmartAssistant()
   sa.vote_command()
   sa.gesture_command()
