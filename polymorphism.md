@@ -65,6 +65,7 @@ feed(Mouse())
 **Вывод:**
 ```
 Feeding the duck bread crumbs
+
 Feeding the mouse bread crumbs
 ```
 ## Задача 3
