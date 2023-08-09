@@ -14,13 +14,13 @@
 **Пример использования:**
 
 ```python 
-  book1 = Autobiography('К черту все! Берись и делай!', 'Ричард Брэнсон')
-  book2 = Psychology('Биология добра и зла', 'Роберт Сапольски')
-  book3 = Fantasy('Песнь льда и пламени', 'Джордж Реймонд Ричард Мартин')
+book1 = Autobiography('К черту все! Берись и делай!', 'Ричард Брэнсон')
+book2 = Psychology('Биология добра и зла', 'Роберт Сапольски')
+book3 = Fantasy('Песнь льда и пламени', 'Джордж Реймонд Ричард Мартин')
 
-  book1.display()
-  book2.display()
-  book3.display()
+book1.display()
+book2.display()
+book3.display()
 ```
 
 **Вывод:**
@@ -58,14 +58,13 @@ def feed(bird: Bird):
 
 **Пример использования:**
 ```python
-  feed(Duck())
-  feed(Mouse())
+feed(Duck())
+feed(Mouse())
 ```
 
 **Вывод:**
 ```
 Feeding the duck bread crumbs
-
 Feeding the mouse bread crumbs
 ```
 ## Задача 3
@@ -87,17 +86,17 @@ Feeding the mouse bread crumbs
 
 **Пример использования:**
 ```python
-  student1 = Student('Ваня')
-  teacher = Teacher('Александр Романович')
-  mentor1 = Mentor('Илья')
-  curator1 = Curator('Владимир')
-  reviewer1 = CodeReviewer('Евгений')
-  
-  student1.ask_question(teacher, 'как войти в айти?')
-  student1.ask_question(teacher, 'как научится программировать?')
-  student1.ask_question(mentor1, 'как повысить эффективность работы?')
-  student1.ask_question(curator1, 'как додуматься до этого решения?')
-  student1.ask_question(reviewer1, 'я усовершенствовал свой код. Вы проверите?')
+student1 = Student('Ваня')
+teacher = Teacher('Александр Романович')
+mentor1 = Mentor('Илья')
+curator1 = Curator('Владимир')
+reviewer1 = CodeReviewer('Евгений')
+
+student1.ask_question(teacher, 'как войти в айти?')
+student1.ask_question(teacher, 'как научится программировать?')
+student1.ask_question(mentor1, 'как повысить эффективность работы?')
+student1.ask_question(curator1, 'как додуматься до этого решения?')
+student1.ask_question(reviewer1, 'я усовершенствовал свой код. Вы проверите?')
 ```
 
 **Вывод:**
@@ -135,12 +134,12 @@ Feeding the mouse bread crumbs
 
 **Пример использования:**
 ```python       
-  figures = [Triangle(1,2,3), Triangle(4,5,6),
-      Square(10), Square(20),
-      Rectangle(6,7), Rectangle(7,8)]
-  
-  for figure in figures:
-    print(figure, figure.get_perimeter())
+figures = [Triangle(1,2,3), Triangle(4,5,6),
+    Square(10), Square(20),
+    Rectangle(6,7), Rectangle(7,8)]
+
+for figure in figures:
+  print(figure, figure.get_perimeter())
 ```
 
 **Вывод:**
@@ -173,19 +172,19 @@ Feeding the mouse bread crumbs
 **Пример использования:**
 
 ```python  
-  sa = SmartAssistant()
-  sa.vote_command()
-  sa.gesture_command()
-  
-  sc = SmartCamera()
-  sc.open_lock()
-  sc.close_lock()
-  sc.vote_command()
-  sc.gesture_command()
-  
-  sl = SmartLock()
-  sl.open_lock()
-  sl.close_lock()
+sa = SmartAssistant()
+sa.vote_command()
+sa.gesture_command()
+
+sc = SmartCamera()
+sc.open_lock()
+sc.close_lock()
+sc.vote_command()
+sc.gesture_command()
+
+sl = SmartLock()
+sl.open_lock()
+sl.close_lock()
 ```
 
 **Вывод:**
