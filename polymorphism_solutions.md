@@ -111,7 +111,7 @@ class GeometricFigures:
     def get_perimeter(self):
         raise NotImplementedError('Переопределите метод get_perimeter в дочернем классе')
 
-    def get_all_perimeter(self):
+    def get_all_perimeters(self):
         for figure in self.figures:
             figure.get_perimeter()
 
