@@ -3,13 +3,14 @@
 ## Задача 1
 
 ```python
-help('requests')
-from requests import get
-dir(get)
-
-import requests
-response = requests.get('https://docs.python.org/')
-print(response.status_code)
+pip show pip
+pip --help
+pip list
+pip install numpy
+pip show numpy
+pip list
+pip uninstall numpy
+pip list
 ```
 
 ## Задача 2
@@ -18,8 +19,10 @@ print(response.status_code)
 help('pyscreenshot')
 from pyscreenshot import grab
 dir(grab)
+help(pyscreenshot.grab)
 from pyscreenshot import save
 dir(save)
+help(pyscreenshot.save)
 
 import pyscreenshot
 import time
@@ -39,6 +42,7 @@ help('fuzzywuzzy')
 from fuzzywuzzy import fuzz
 dir(fuzz)
 help(fuzz.ratio)
+
 fuzz.ratio('Я разобрался с виртуальным окружением', 'Я разобрался с виртуальным окружением') 
 fuzz.ratio('Я разобрался с виртуальным окружением!', 'Я разобрался с виртуальным окружением!')
 fuzz.ratio('Я разобрался с виртуальным окружением?', 'Я разобрался с виртуальным окружением!')
@@ -50,14 +54,18 @@ fuzz.ratio('Я разобрался с виртуальным окружение
 help('psutil')
 from psutil import sensors_battery
 dir(sensors_battery)
+help(psutil.sensors_battery)
 
 help('pyttsx3')
 from pyttsx3 import init
 dir(init)
+help(pyttsx3.init)
 from pyttsx3 import say
 dir(say)
+help(pyttsx3.say)
 from pyttsx3 import runAndWait
 dir(runAndWait)
+help(pyttsx3.runAndWait)
 
 import psutil
 import pyttsx3
@@ -65,7 +73,7 @@ import pyttsx3
 battery = psutil.sensors_battery()
 percent = str(battery.percent)
 print('Состояние батареи: осталось' + percent + '% заряда')
-if battery.percent < 100:
+if battery.percent <= 20:
     engine = pyttsx3.init()
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[0].id)
@@ -79,6 +87,7 @@ if battery.percent < 100:
 help('win11toast')
 from win11toast import toast
 dir(toast)
+help(win11toast.toast)
 
 from win11toast import toast
 from datetime import datetime
