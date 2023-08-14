@@ -16,6 +16,28 @@ pip list
 ## Задача 2
 
 ```python
+import os           
+os.mkdir('folder')
+
+py -3.11 -m venv venv1
+venv1\Scripts\activate
+python.exe -m pip install --upgrade pip
+pip install Pillow
+pip list
+pip freeze > requirements.txt
+deactivate
+rm -r venv1
+py -3.11 -m venv venv2
+venv2\Scripts\activate
+python.exe -m pip install --upgrade pip
+pip install -r requirements.txt
+pip list
+deactivate
+```
+
+## Задача 3
+
+```python
 help('pyscreenshot')
 from pyscreenshot import grab
 dir(grab)
@@ -35,7 +57,7 @@ for i in range(5):
     image.save("scr" + str(i) + ".png")
 ```
 
-## Задача 3
+## Задача 4
 
 ```python
 help('fuzzywuzzy')
@@ -48,7 +70,7 @@ fuzz.ratio('Я разобрался с виртуальным окружение
 fuzz.ratio('Я разобрался с виртуальным окружением?', 'Я разобрался с виртуальным окружением!')
  ```
 
-## Задача 4
+## Задача 5
 
 ```python
 help('psutil')
@@ -81,7 +103,7 @@ if battery.percent <= 20:
     engine.runAndWait()
  ```
 
-## Задача 5
+## Задача 6
 
 ```python
 help('win11toast')
@@ -126,7 +148,7 @@ while True:
             break
 ```
 
-## Задача 6
+## Задача 7
 
 ```python
 import os
