@@ -2,7 +2,7 @@
 
 ## Задача 1
 
-```python
+```
 pip show pip
 pip --help
 pip list
@@ -43,7 +43,7 @@ from fuzzywuzzy import fuzz
 dir(fuzz)
 help(fuzz.ratio)
 
-fuzz.ratio('Я разобрался с виртуальным окружением', 'Я разобрался с виртуальным окружением') 
+fuzz.ratio('Я разобрался с виртуальным окружением', 'Это оказалось совсем не трудно') 
 fuzz.ratio('Я разобрался с виртуальным окружением!', 'Я разобрался с виртуальным окружением!')
 fuzz.ratio('Я разобрался с виртуальным окружением?', 'Я разобрался с виртуальным окружением!')
  ```
@@ -72,7 +72,7 @@ import pyttsx3
 
 battery = psutil.sensors_battery()
 percent = str(battery.percent)
-print('Состояние батареи: осталось' + percent + '% заряда')
+print('Состояние батареи: осталось ' + percent + '% заряда')
 if battery.percent <= 20:
     engine = pyttsx3.init()
     voices = engine.getProperty('voices')
