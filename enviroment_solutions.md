@@ -3,6 +3,10 @@
 ## Задача 1
 
 ```python
+help('requests')
+from requests import get
+dir(get)
+
 import requests
 response = requests.get('https://docs.python.org/')
 print(response.status_code)
@@ -11,6 +15,12 @@ print(response.status_code)
 ## Задача 2
 
 ```python
+help('pyscreenshot')
+from pyscreenshot import grab
+dir(grab)
+from pyscreenshot import save
+dir(save)
+
 import pyscreenshot
 import time
 import os
@@ -25,6 +35,30 @@ for i in range(5):
 ## Задача 3
 
 ```python
+help('fuzzywuzzy')
+from fuzzywuzzy import fuzz
+dir(fuzz)
+help(fuzz.ratio)
+fuzz.ratio('Я разобрался с виртуальным окружением', 'Я разобрался с виртуальным окружением') 
+fuzz.ratio('Я разобрался с виртуальным окружением!', 'Я разобрался с виртуальным окружением!')
+fuzz.ratio('Я разобрался с виртуальным окружением?', 'Я разобрался с виртуальным окружением!')
+ ```
+
+## Задача 4
+
+```python
+help('psutil')
+from psutil import sensors_battery
+dir(sensors_battery)
+
+help('pyttsx3')
+from pyttsx3 import init
+dir(init)
+from pyttsx3 import say
+dir(say)
+from pyttsx3 import runAndWait
+dir(runAndWait)
+
 import psutil
 import pyttsx3
 
@@ -39,9 +73,13 @@ if battery.percent < 100:
     engine.runAndWait()
  ```
 
-## Задача 4
+## Задача 5
 
 ```python
+help('win11toast')
+from win11toast import toast
+dir(toast)
+
 from win11toast import toast
 from datetime import datetime
 
@@ -79,7 +117,7 @@ while True:
             break
 ```
 
-## Задача 5
+## Задача 6
 
 ```python
 import os
