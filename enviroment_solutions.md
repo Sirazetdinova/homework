@@ -32,7 +32,7 @@ os.chdir("C:\scr")
 for i in range(5):
     time.sleep(5)
     image = pyscreenshot.grab()
-    image.save("scr" + str(i) + ".png", sep='')
+    image.save("scr" + str(i) + ".png")
 ```
 
 ## Задача 3
