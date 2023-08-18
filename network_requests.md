@@ -1,19 +1,5 @@
 # Сетевые запросы
 
-Задачи:
-
-1) NASA API
-    
-2) IP Geolocation API
-
-3) API Calc
-
-4) API Harry Potter
-
-5) Translate API
-
-6) ChatGPT API
-
 ## Задача 1
 
 [NASA API]:#
@@ -98,6 +84,20 @@ for prompt in prompts:
     l=client.image_generation(prompt)
     print(l)
 ```
+
+Задачи:
+
+1) NASA API
+    
+2) IP Geolocation API
+
+3) API Calc
+
+4) API Harry Potter
+
+5) Translate API
+
+6) ChatGPT API
 
 
 
