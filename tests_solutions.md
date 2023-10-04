@@ -112,7 +112,7 @@ def watering_system_with_schedule():
     return system
 
 @pytest.mark.parametrize("water_amount", [100, 200])
-def test_start_watering(watering_system_with_enough_water, water_amount):
+def test_start_watering_with_enough_water(watering_system_with_enough_water, water_amount):
     watering_system_with_enough_water.start_watering(duration_minutes=10, water_amount=water_amount)
     assert watering_system_with_enough_water.is_watering is True
 
