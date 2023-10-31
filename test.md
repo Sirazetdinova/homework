@@ -139,144 +139,180 @@ if __name__ == "__main__":
     
 ***Примечание**: используйте параметризованную фикстуру **sample_task**, которая создает экземпляр `Task` с разными описаниями задач (например, "Sample Task 1" и "Sample Task 2").*
 
-*А также используйте фикстуру **task_list**, которая создает экземпляр класса `TaskList`. Это позволит создавать новые списки задач для каждого теста. Таким образом, мы обеспечиваем изоляцию между тестами и удостоверяемся, что каждый тест не зависит от состояния других тестов. Это важно для корректного тестирования функциональности.*
+*А также используйте фикстуру, которая создает экземпляр класса `TaskList`. Это позволит создавать новые списки задач для каждого теста. Таким образом, мы обеспечиваем изоляцию между тестами и удостоверяемся, что каждый тест не зависит от состояния других тестов. Это важно для корректного тестирования функциональности.*
 
 
-## Задача 2. Тестирование программы Auto Watering System
+## Задача 2. Тестирование программы Watering System
     
 **Цель тестирования.** Проверить корректность работы программы Automatic Watering System, которая предназначена для управления автоматической системы полива.
 
 **Инструкция по тестированию:**
 
-1. Запустите программу Automatic Watering System.
+1. Запустите программу Watering System.
 2. Проверьте каждый тестовый случай, описанный ниже, с помощью автоматизированных тестов.
 3. Запишите результаты тестов и заметки об ошибках, если они есть. 
     
 
 ```python
-import time
+class WateringSystem:
+    def __init__(self):
+        self.water_level = 2000  # Начальный уровень воды в системе
+        self.is_watering = False  # Флаг, указывающий, идет ли полив в данный момент
+        self.areas = {}  # Возможные участки для полива
+        self.schedule = {}  # Расписание полива
 
-
-class AutomaticWateringSystem:
-    def __init__(self, initial_water_level, initial_soil_moisture):
-        self.water_level = initial_water_level
-        self.soil_moisture = initial_soil_moisture
-        self.is_watering = False
-        self.schedule = {}
-
-    def start_watering(self, duration_minutes, water_amount):
-        if self.water_level >= water_amount:
-            self.water_level -= water_amount
-            self.is_watering = True
-            print(f"Начался полив на {duration_minutes} минут с использованием {water_amount} мл воды.")
-            print("Полив завершен.")
-        else:
-            self.is_watering = False
-            print("Недостаточно воды для полива.")
+    def get_water_level(self):
+        print(f"Current water level in the system: {self.water_level} мл \n")
 
     def add_water(self, amount):
+        # Добавление воды в систему
         self.water_level += amount
-        self.log_message = f"Добавлено {amount} мл воды. Текущий уровень воды: {self.water_level} мл."
 
-    def check_soil_moisture(self):
-        return self.soil_moisture
+    def start_watering(self, area_name=None):
+        if area_name is not None:
+            print(f"Watering of the {area_name} has been started.")
+        self.is_watering = True
 
-    def check_water_level(self):
-        return self.water_level
+    def stop_watering(self, area_name=None):
+        if area_name is not None:
+            print(f"The watering of the {area_name} has been completed.")
+        self.is_watering = False
 
-    def set_watering_schedule(self, start_time, duration_minutes, water_amount):
-        # Установка расписания полива
-        self.schedule = {"start_time": start_time, "duration_minutes": duration_minutes, "water_amount": water_amount}
-        print("Расписание полива установлено.")
+    def add_area(self, area, initial_moisture):
+        # Добавление нового участка для полива
+        if area not in self.areas:
+            self.areas[area] = {
+                "soil_moisture": initial_moisture,  # Уровень влажности почвы на участке
+                "spray_water": 0,  # Скорость подачи воды
+            }
+        else:
+            print(f"An area named {area} already exists in the system.")
 
-    def run_scheduled_watering(self):
-        # Проверка расписания и запуск полива при необходимости
-        current_time = time.localtime()
-        current_day = current_time.tm_wday  # Получаем текущий день недели (0 - Пн, 6 - Вс)
+    def check_soil_moisture(self, area_name=None):
+        if area_name is not None:
+            if area_name in self.areas:
+                moisture = self.areas[area_name]["soil_moisture"]
+                print(f"Moisture level for area {area_name}: {moisture}%.")
+            else:
+                print(f"An area named {area_name} already exists in the system.")
+        else:
+            for area, data in self.areas.items():
+                moisture = data["soil_moisture"]
+                print(f"Moisture level for area {area_name}: {moisture}%.")
 
-        if current_day in self.schedule:
-            scheduled_info = self.schedule[current_day]
-            start_time = scheduled_info["start_time"]
-            duration_minutes = scheduled_info["duration_minutes"]
-            water_amount = scheduled_info["water_amount"]
+    def water_area(self, area, duration):
+        # Полив участка на некоторое время
+        if area in self.areas:
+            self.start_watering(area)  # Включаем систему полива
+            water_needed = duration * self.areas[area]["spray_water"]  # Вычисляем необходимое количество воды
+            if self.water_level >= water_needed:
+                if self.areas[area]["soil_moisture"] < 100:
+                    # Если уровень влажности на участке не достиг 100%
+                    self.water_level -= water_needed
+                    new_soil_moisture = self.areas[area]["soil_moisture"] + (duration * 5)
+                    self.areas[area]["soil_moisture"] = min(new_soil_moisture, 100)  # Ограничиваем влажность до 100%
+                else:
+                    print(f"Зона {area} уже имеет максимальную влажность (100%) и не требует полива.")
+            else:
+                print(f"Not enough water to spray the area {area}")
+            self.stop_watering(area)  # Выключаем систему полива
 
-            current_hour = current_time.tm_hour
-            current_minute = current_time.tm_min
-            scheduled_minute = start_time // 60
-            scheduled_hour = start_time % 60
+    def set_watering_schedule(self, area, spray_water):
+        # Установка расписания полива для участка
+        if area in self.areas:
+            self.areas[area]["spray_water"] = spray_water
+        else:
+            print(f"Area named {area} does not exist in the system. Please add a site using add_area.")
 
-            if current_hour == scheduled_hour and current_minute >= scheduled_minute:
-                print(f"Запуск запланированного полива на {duration_minutes} минут.")
-                self.start_watering(duration_minutes, water_amount)
-                return  # Добавляем return для выхода из метода после запуска полива
 
-# Пример использования
 if __name__ == "__main__":
-    watering_system = AutomaticWateringSystem(initial_water_level=1000, initial_soil_moisture=50)
+    system = WateringSystem()
 
-    watering_system.add_water(500)
+    system.get_water_level()
 
-    watering_system.set_watering_schedule(start_time=8 * 60, duration_minutes=10, water_amount=200)
+    system.add_area("Garden", 30)
+    system.set_watering_schedule("Garden", 10)
+    system.water_area("Garden", 30)
+    system.check_soil_moisture("Garden")
 
-    print(f"Влажность почвы: {watering_system.check_soil_moisture()}%")
-    print(f"Уровень воды в резервуаре: {watering_system.check_water_level()} мл")
+    system.get_water_level()
 
-    watering_system.run_scheduled_watering()
+    system.add_area("Flowerbed", 25)
+    system.set_watering_schedule("Flowerbed", 8)
+    system.water_area("Flowerbed", 20)
+    system.check_soil_moisture("Flowerbed")
 
-    print(f"Влажность почвы: {watering_system.check_soil_moisture()}%")
-    print(f"Уровень воды в резервуаре: {watering_system.check_water_level()} мл")
+    system.get_water_level()
 ```
 
 **Требования к тестам:**
 
-1. **Тест запуска полива с достаточным количеством воды `test_start_watering_with_enough_water`:**
-   - Создать экземпляр системы автоматического полива с достаточным количеством воды, используя фикстуру `watering_system_with_enough_water`.
-   - Вызвать метод `start_watering()` с параметрами `duration_minutes=10` и `water_amount`. Этот шаг выполняется дважды: с `water_amount=100` и `water_amount=200`.
-   - Убедиться, что после вызова метода `start_watering()` начался полив.
+1. **Тест на начальный уровень влажности участка `test_initial_soil_moisture`**:
+   - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
+   - Проверить, что начальный уровень влажности участка `Garden` равен 30%.
 
-2. **Тест запуска полива с недостаточным количеством воды `test_start_watering_with_insufficient_water`:**
-      - Создать экземпляр системы автоматического полива с начальным уровнем воды, используя фикстуру `watering_system_with_insufficient_water`.
-      - Вызвать метод `start_watering()` с параметрами `duration_minutes=10` и `water_amount=1500`.
-      - Убедиться, что после вызова метода `start_watering()` не начался полив.
+2. **Тест на добавление воды в систему `test_add_water`**:
+   - Создать экземпляр системы автоматического полива с начальным уровнем воды 2000 мл с помощью фикстуры `watering_system`.
+   - Вызвать метод `add_water` с параметром 500 для добавления 500 мл воды.
+   - Проверить, что уровень воды в системе стал равен 2500 мл.
 
-3. **Тест добавления воды `test_add_water`:**
-    - Создать экземпляр системы автоматического полива с начальным уровнем воды, используя фикстуру `watering_system_with_custom_parameters`.
-    - Вызвать метод `add_water()` с параметром `amount=200`.
-    - Убедиться, что уровень воды увеличился до `1400` мл.
+3. **Тест на добавление уже существующего участка `test_add_existing_area`**:
+   - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
+   - Вызвать метод `add_area` с параметром `Garden` и новым начальным уровнем влажности 50.
+   - Проверить, что метод `add_area` не изменил начальный уровень влажности участка `Garden` (остался 30%).
 
-4. **Тест проверки уровня влажности почвы `test_check_soil_moisture`:**
-      - Создать экземпляр системы автоматического полива с начальным уровнем влажности почвы, используя фикстуру `watering_system_with_custom_parameters`.
-      - Убедиться, что уровень влажности равен `40`.
+4. **Тест на добавление нового участка `test_add_new_area`**:
+   - Создать экземпляр системы автоматического полива с пустым списком участков с помощью фикстуры `watering_system`.
+   - Вызвать метод `add_area` с параметром `Lawn` и начальным уровнем влажности 40.
+   - Проверить, что участок `Lawn` добавлен в систему.
 
-5. **Тест установки расписания полива `test_set_watering_schedule`:**
-    - Создать экземпляр системы автоматического полива с пустым расписанием, используя фикстуру `watering_system_with_schedule`.
-    - Вызвать метод `set_watering_schedule()` с параметрами `start_time=720`, `duration_minutes=20`, и `water_amount=150`.
-    - Убедиться, что расписание установлено правильно.
+5. **Тест на установку расписания полива `test_set_watering_schedule`**:
+   - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
+   - Вызвать метод `set_watering_schedule` с параметрами `Garden` и скоростью подачи воды 15.
+   - Проверить, что скорость подачи воды для участка `Garden` стала равной 15.
 
-6. **Тест запуска расписанного полива, когда расписание совпадает `test_run_scheduled_watering`:**
-    - Создать экземпляр системы автоматического полива с установленным расписанием, используя фикстуру `watering_system_with_schedule`.
-    - Использовать `mocker` для имитации текущего времени. Установите текущее время с помощью `mocker.patch` на значение, заданное в параметре `current_time`. Это будет имитацией времени выполнения теста.
-       -  Здесь параметр `current_time` определяет текущее время в структуре `time.struct_time`. Он задает момент времени, когда тест будет выполняться.
-        - Здесь параметр `expected_is_watering` определяет ожидаемое значение атрибута `is_watering` после выполнения метода `run_scheduled_watering()`.
-    - Вызвать метод `run_scheduled_watering()` для объекта системы автоматического полива.
-    - Убедиться, что значение атрибута `is_watering` соответствует ожидаемому значению `expected_is_watering`.
+6. **Тест для проверки уровня влажности после полива `test_water_area`**:
+   - Создать экземпляр системы автоматического полива с заданными участками и расписанием с помощью фикстуры `watering_system`.
+   - Параметры теста: "area" (участок для полива), "duration" (продолжительность полива в минутах) и "expected_moisture" (ожидаемый уровень влажности после полива).
+   - Вызвать метод `water_area` с заданными параметрами.
+   - Проверить, что уровень влажности на участке после полива соответствует ожидаемому.
 
-***Примечание**: используйте фикстуры и параметризацию в тестировании, ведь это полезные инструменты для более гибкого и эффективного тестирования. А именно, в написании тестирования к этой программе Вам могут помочь:*
+7. **Тест на полив при нехватке воды `test_water_area_not_enough_water`**:
+   - Создать экземпляр системы автоматического полива с начальным уровнем воды 0 мл с помощью фикстуры `watering_system`.
+   - Вызвать метод `water_area` с параметрами `Garden` (участок для полива) и "duration" (продолжительность полива в минутах) 30.
+   - Проверить, что метод `water_area` возвращает None, так как не хватает воды для полива.
 
-- *Фикстура **watering_system_with_enough_water** для создания экземпляра класса с достаточным уровнем воды.*
-    
-- *Фикстура **watering_system_with_insufficient_water** для создания экземпляра класса с недостаточным уровнем воды.*
-    
-- *Фикстура **watering_system_with_custom_parameters** создает экземпляр класса с настраиваемыми параметрами.*
-    
-- *Фикстура **watering_system_with_schedule** создает экземпляр класса с расписанием полива.*
-    
-- *Параметр **water_amount** с разными значениями для проверки поведения функции start_watering*
-    
-- *Параметры **current_time**, **expected_is_watering** для проверки поведения функции run_scheduled_watering*
-    
-*Здесь значения параметров следующие:*
+8. **Тест на полив при максимальной влажности `test_max_soil_moisture`**:
+   - Создать экземпляр системы автоматического полива с заданным участком `Garden` и максимальным уровнем влажности 100% с помощью фикстуры `watering_system`.
+   - Вызвать метод `water_area` с параметрами `Garden` и "duration" 30.
+   - Проверить, что метод `water_area` не выполнил полива, так как уровень влажности уже максимальный.
 
-*Параметр **current_time** определен двумя значениями - time.struct_time для двух разных временных моментов.*
-    
-*Параметр* ***expected_is_watering** определен двумя значениями - True или False в зависимости от того, ожидается ли начало полива или его отсутствие.*
+9. **Тест для проверки влажности почвы после длительного полива `test_soil_moisture_after_long_watering`**:
+   - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
+   - Вызвать метод `water_area` с параметрами `Garden` и "duration" 60 (продолжительность полива в минутах).
+   - Проверить, что после длительного полива уровень влажности на участке `Garden` стал максимальным (100%).
+
+10. **Тест для проверки полива без включения системы `test_watering_without_starting`**:
+    - Создать экземпляр системы автоматического полива с заданным участком `Garden` с помощью фикстуры `watering_system`.
+    - Остановить систему полива методом `stop_watering`.
+    - Вызвать метод `water_area` с параметрами `Garden` и "duration" 30.
+    - Проверить, что метод `water_area` не выполнил полива, так как система не была включена.
+   
+11. **Тест на проверку влажности почвы после полива `test_soil_moisture_after_watering`**:
+    - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
+    - Вызвать метод `water_area` с параметрами `Garden` и "duration" 30 (продолжительность полива в минутах).
+    - Проверить, что после полива уровень влажности на участке `Garden` стал максимальным (100%).
+
+12. **Тест на проверку расписания после изменения `test_watering_schedule_after_change`**:
+    - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
+    - Вызвать метод `set_watering_schedule` с параметрами `Garden` и новой скоростью подачи воды 10.
+    - Проверить, что скорость подачи воды для участка `Garden` стала равной 10.
+
+***Примечание**: используйте параметризованную фикстуру **watering_system**, которая создает экземпляр класса `WateringSystem` и настраивает его с определенными участками для полива и расписанием. А именно:* 
+
+*1) Добавляет участок `Garden` с начальным уровнем влажности 30%, и устанавливает скокрость подачи воды 10.*
+
+*2) Добавляет участок `Flowerbed` с начальным уровнем влажности 25%, и устанавливает скорость подачи воды 8.*
+
+*А также используйте фикстуру, которая определяет разные сценари полива и ожидаемые результаты. Это позволит создавать новые списки задач для каждого теста. Таким образом, мы обеспечиваем изоляцию между тестами и удостоверяемся, что каждый тест не зависит от состояния других тестов. Это важно для корректного тестирования функциональности.*
+
