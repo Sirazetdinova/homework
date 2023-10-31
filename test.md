@@ -14,22 +14,21 @@
 ```python
 import datetime
 
-
 class Task:
     def __init__(self, description, priority=1, deadline=None):
-        self.description = description
-        self.priority = priority
-        self.deadline = deadline
+        self.description = description  # Описание задачи
+        self.priority = priority  # Приоритет задачи (по умолчанию 1)
+        self.deadline = deadline  # Срок задачи (по умолчанию None)
         self.is_completed = False
 
     def mark_completed(self):
+        # Помечает задачу как выполненную.
         self.is_completed = True
 
     def __str__(self):
         status = "Completed" if self.is_completed else "Not Completed"
         deadline_info = f"Deadline: {self.deadline}" if self.deadline else "No Deadline"
         return f"Description: {self.description}\nPriority: {self.priority}\nStatus: {status}\n{deadline_info}\n"
-
 
 class TaskList:
     def __init__(self):
@@ -46,14 +45,15 @@ class TaskList:
             task.description = new_description
 
     def sort_by_priority(self):
+        # Сортирует список задач по приоритету (по убыванию).
         self.tasks.sort(key=lambda x: x.priority, reverse=True)
 
     def filter_by_status(self, completed=False):
+        # Фильтрует задачи по статусу выполнения.
         return [task for task in self.tasks if task.is_completed == completed]
 
     def set_deadline(self, task, deadline):
         task.deadline = deadline
-
 
 # Пример использования
 if __name__ == "__main__":
@@ -273,34 +273,34 @@ if __name__ == "__main__":
 
 6. **Тест для проверки уровня влажности после полива `test_water_area`**:
    - Создать экземпляр системы автоматического полива с заданными участками и расписанием с помощью фикстуры `watering_system`.
-   - Параметры теста: "area" (участок для полива), "duration" (продолжительность полива в минутах) и "expected_moisture" (ожидаемый уровень влажности после полива).
+   - Параметры теста: `area` (участок для полива), `duration` (продолжительность полива в минутах) и `expected_moisture` (ожидаемый уровень влажности после полива).
    - Вызвать метод `water_area` с заданными параметрами.
    - Проверить, что уровень влажности на участке после полива соответствует ожидаемому.
 
 7. **Тест на полив при нехватке воды `test_water_area_not_enough_water`**:
    - Создать экземпляр системы автоматического полива с начальным уровнем воды 0 мл с помощью фикстуры `watering_system`.
-   - Вызвать метод `water_area` с параметрами `Garden` (участок для полива) и "duration" (продолжительность полива в минутах) 30.
+   - Вызвать метод `water_area` с параметрами `Garden` (участок для полива) и `duration` (продолжительность полива в минутах) 30.
    - Проверить, что метод `water_area` возвращает None, так как не хватает воды для полива.
 
 8. **Тест на полив при максимальной влажности `test_max_soil_moisture`**:
    - Создать экземпляр системы автоматического полива с заданным участком `Garden` и максимальным уровнем влажности 100% с помощью фикстуры `watering_system`.
-   - Вызвать метод `water_area` с параметрами `Garden` и "duration" 30.
+   - Вызвать метод `water_area` с параметрами `Garden` и `duration` 30.
    - Проверить, что метод `water_area` не выполнил полива, так как уровень влажности уже максимальный.
 
 9. **Тест для проверки влажности почвы после длительного полива `test_soil_moisture_after_long_watering`**:
    - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
-   - Вызвать метод `water_area` с параметрами `Garden` и "duration" 60 (продолжительность полива в минутах).
+   - Вызвать метод `water_area` с параметрами `Garden` и `duration` 60 (продолжительность полива в минутах).
    - Проверить, что после длительного полива уровень влажности на участке `Garden` стал максимальным (100%).
 
 10. **Тест для проверки полива без включения системы `test_watering_without_starting`**:
     - Создать экземпляр системы автоматического полива с заданным участком `Garden` с помощью фикстуры `watering_system`.
     - Остановить систему полива методом `stop_watering`.
-    - Вызвать метод `water_area` с параметрами `Garden` и "duration" 30.
+    - Вызвать метод `water_area` с параметрами `Garden` и `duration` 30.
     - Проверить, что метод `water_area` не выполнил полива, так как система не была включена.
    
 11. **Тест на проверку влажности почвы после полива `test_soil_moisture_after_watering`**:
     - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
-    - Вызвать метод `water_area` с параметрами `Garden` и "duration" 30 (продолжительность полива в минутах).
+    - Вызвать метод `water_area` с параметрами `Garden` и `duration` 30 (продолжительность полива в минутах).
     - Проверить, что после полива уровень влажности на участке `Garden` стал максимальным (100%).
 
 12. **Тест на проверку расписания после изменения `test_watering_schedule_after_change`**:
