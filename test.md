@@ -152,7 +152,7 @@ if __name__ == "__main__":
 ```python
 class WateringSystem:
     def __init__(self):
-        self.water_level = 2000  # Начальный уровень воды в системе
+        self.water_level = 2000  # Уровень воды в системе
         self.is_watering = False  # Флаг, указывающий, идет ли полив в данный момент
         self.areas = {}  # Возможные участки для полива
         self.schedule = {}  # Расписание полива
@@ -179,7 +179,7 @@ class WateringSystem:
         if area not in self.areas:
             self.areas[area] = {
                 "soil_moisture": initial_moisture,  # Уровень влажности почвы на участке
-                "spray_water": 0,  # Скорость подачи воды
+                "speed_water": 0,  # Скорость подачи воды
             }
         else:
             print(f"An area named {area} already exists in the system.")
@@ -200,7 +200,7 @@ class WateringSystem:
         # Полив участка на некоторое время
         if area in self.areas:
             self.start_watering(area)  # Включаем систему полива
-            water_needed = duration * self.areas[area]["spray_water"]  # Вычисляем необходимое количество воды
+            water_needed = duration * self.areas[area]["speed_water"]  # Вычисляем необходимое количество воды
             if self.water_level >= water_needed:
                 if self.areas[area]["soil_moisture"] < 100:
                     # Если уровень влажности на участке не достиг 100%
@@ -213,10 +213,10 @@ class WateringSystem:
                 print(f"Not enough water to spray the area {area}")
             self.stop_watering(area)  # Выключаем систему полива
 
-    def set_watering_schedule(self, area, spray_water):
+    def set_watering_schedule(self, area, speed_water):
         # Установка расписания полива для участка
         if area in self.areas:
-            self.areas[area]["spray_water"] = spray_water
+            self.areas[area]["speed_water"] = speed_water
         else:
             print(f"Area named {area} does not exist in the system. Please add a site using add_area.")
 
