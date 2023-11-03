@@ -148,6 +148,13 @@ if __name__ == "__main__":
 2. Проверьте каждый тестовый случай, описанный ниже, с помощью автоматизированных тестов.
 3. Запишите результаты тестов и сделайте заметки об ошибках, если они есть. 
     
+***Примечание**: используйте параметризованную фикстуру **watering_system**, которая создает экземпляр класса `WateringSystem` и настраивает его с определенными участками для полива и расписанием. А именно:* 
+
+*1) Добавляет участок `Garden` с начальным уровнем влажности 30%, и устанавливает скорость подачи воды 10.*
+
+*2) Добавляет участок `Flowerbed` с начальным уровнем влажности 25%, и устанавливает скорость подачи воды 8.*
+
+*А также используйте фикстуру, которая определяет разные сценари полива и ожидаемые результаты. Это позволит создавать новые списки задач для каждого теста. Таким образом, мы обеспечиваем изоляцию между тестами и удостоверяемся, что каждый тест не зависит от состояния других тестов. Это важно для корректного тестирования функциональности.*
 
 ```python
 class WateringSystem:
@@ -157,11 +164,27 @@ class WateringSystem:
         self.areas = {}  # Возможные участки для полива
         self.schedule = {}  # Расписание полива
 
+    @property
+    def water_level(self):
+        return self._water_level
+
+    @water_level.setter
+    def water_level(self, value):
+        self._water_level = value
+
+    @property
+    def is_watering(self):
+        return self._is_watering
+
+    @is_watering.setter
+    def is_watering(self, value):
+        self._is_watering = value
+        
     def get_water_level(self):
         print(f"Current water level in the system: {self.water_level} мл \n")
 
+    # Добавление воды в систему
     def add_water(self, amount):
-        # Добавление воды в систему
         self.water_level += amount
 
     def start_watering(self, area_name=None):
@@ -174,8 +197,8 @@ class WateringSystem:
             print(f"The watering of the {area_name} has been completed.")
         self.is_watering = False
 
+    # Добавление нового участка для полива
     def add_area(self, area, initial_moisture):
-        # Добавление нового участка для полива
         if area not in self.areas:
             self.areas[area] = {
                 "soil_moisture": initial_moisture,  # Уровень влажности почвы на участке
@@ -196,8 +219,8 @@ class WateringSystem:
                 moisture = data["soil_moisture"]
                 print(f"Moisture level for area {area_name}: {moisture}%.")
 
+    # Полив участка на некоторое время
     def water_area(self, area, duration):
-        # Полив участка на некоторое время
         if area in self.areas:
             self.start_watering(area)  # Включаем систему полива
             water_needed = duration * self.areas[area]["spray_water"]  # Вычисляем необходимое количество воды
@@ -213,8 +236,8 @@ class WateringSystem:
                 print(f"Not enough water to spray the area {area}")
             self.stop_watering(area)  # Выключаем систему полива
 
+    # Установка расписания полива для участка
     def set_watering_schedule(self, area, spray_water):
-        # Установка расписания полива для участка
         if area in self.areas:
             self.areas[area]["spray_water"] = spray_water
         else:
@@ -303,12 +326,3 @@ if __name__ == "__main__":
     - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
     - Вызвать метод `set_watering_schedule` с параметрами `Garden` и новой скоростью подачи воды 10.
     - Проверить, что скорость подачи воды для участка `Garden` стала равной 10.
-
-***Примечание**: используйте параметризованную фикстуру **watering_system**, которая создает экземпляр класса `WateringSystem` и настраивает его с определенными участками для полива и расписанием. А именно:* 
-
-*1) Добавляет участок `Garden` с начальным уровнем влажности 30%, и устанавливает скорость подачи воды 10.*
-
-*2) Добавляет участок `Flowerbed` с начальным уровнем влажности 25%, и устанавливает скорость подачи воды 8.*
-
-*А также используйте фикстуру, которая определяет разные сценари полива и ожидаемые результаты. Это позволит создавать новые списки задач для каждого теста. Таким образом, мы обеспечиваем изоляцию между тестами и удостоверяемся, что каждый тест не зависит от состояния других тестов. Это важно для корректного тестирования функциональности.*
-
