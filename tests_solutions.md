@@ -104,9 +104,9 @@ from app.watering_system import WateringSystem
 def watering_system():
     system = WateringSystem()
     system.add_area("Газон", 30)
-    system.test_water_spray_supply("Газон", 10)
+    system.water_spray_supply("Газон", 10)
     system.add_area("Клумба", 25)
-    system.test_water_spray_supply("Клумба", 8)
+    system.water_spray_supply("Клумба", 8)
     return system
 
 
