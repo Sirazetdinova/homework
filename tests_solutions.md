@@ -92,7 +92,7 @@ def test_set_deadline(task_list, sample_task):
 ```
 
 
-## Задача 2. Тестирование программы Auto Watering System
+## Задача 2. Тестирование программы Watering System
      
 
 ```python
