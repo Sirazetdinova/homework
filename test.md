@@ -162,7 +162,6 @@ class WateringSystem:
         self.water_level = 2000  # Начальный уровень воды в системе
         self.is_watering = False  # Флаг, указывающий, идет ли полив в данный момент
         self.areas = {}  # Возможные участки для полива
-        self.schedule = {}  # Расписание полива
 
     @property
     def water_level(self):
@@ -250,14 +249,16 @@ if __name__ == "__main__":
     system.get_water_level()
 
     system.add_area("Garden", 30)
-    system.set_watering_schedule("Garden", 10)
+    system.check_soil_moisture("Garden")
+    system.water_spray_supply("Garden", 10)
     system.water_area("Garden", 30)
     system.check_soil_moisture("Garden")
 
     system.get_water_level()
 
     system.add_area("Flowerbed", 25)
-    system.set_watering_schedule("Flowerbed", 8)
+    system.check_soil_moisture("Flowerbed")
+    system.water_spray_supply("Flowerbed", 8)
     system.water_area("Flowerbed", 20)
     system.check_soil_moisture("Flowerbed")
 
@@ -285,9 +286,9 @@ if __name__ == "__main__":
    - Вызвать метод `add_area` с параметром `Lawn` и начальным уровнем влажности 40.
    - Проверить, что участок `Lawn` добавлен в систему.
 
-5. **Тест на установку расписания полива `test_set_watering_schedule`**:
+5. **Тест на установку расписания полива `test_water_spray_supply`**:
    - Создать экземпляр системы автоматического полива с заданным участком `Garden` и начальным уровнем влажности 30% с помощью фикстуры `watering_system`.
-   - Вызвать метод `set_watering_schedule` с параметрами `Garden` и скоростью подачи воды 15.
+   - Вызвать метод `test_water_spray_supply` с параметрами `Garden` и скоростью подачи воды 15.
    - Проверить, что скорость подачи воды для участка `Garden` стала равной 15.
 
 6. **Тест для проверки уровня влажности после полива `test_water_area`**:
