@@ -104,9 +104,9 @@ from app.watering_system import WateringSystem
 def watering_system():
     system = WateringSystem()
     system.add_area("Газон", 30)
-    system.set_watering_schedule("Газон", 10)
+    system.test_water_spray_supply("Газон", 10)
     system.add_area("Клумба", 25)
-    system.set_watering_schedule("Клумба", 8)
+    system.test_water_spray_supply("Клумба", 8)
     return system
 
 
@@ -136,8 +136,8 @@ def test_add_new_area(watering_system):
 
 
 # Тест установки расписания полива
-def test_set_watering_schedule(watering_system):
-    watering_system.set_watering_schedule("Газон", 15)
+def test_water_spray_supply(watering_system):
+    watering_system.test_water_spray_supply("Газон", 15)
     assert watering_system.areas["Газон"]["spray_water"] == 15
 
 
@@ -193,10 +193,5 @@ def test_soil_moisture_after_watering(watering_system):
     watering_system.water_area("Газон", 30)
     assert watering_system.areas["Газон"]["soil_moisture"] == 100  # Ожидаем, что уровень влажности стал 100%
 
-
-# Тест расписания после изменения
-def test_watering_schedule_after_change(watering_system):
-    watering_system.set_watering_schedule("Газон", 80)
-    assert watering_system.areas["Газон"]["spray_water"] == 80
 ```
 
