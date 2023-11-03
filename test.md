@@ -179,7 +179,7 @@ class WateringSystem:
     @is_watering.setter
     def is_watering(self, value):
         self._is_watering = value
-        
+
     def get_water_level(self):
         print(f"Current water level in the system: {self.water_level} мл \n")
 
@@ -236,8 +236,8 @@ class WateringSystem:
                 print(f"Not enough water to spray the area {area}")
             self.stop_watering(area)  # Выключаем систему полива
 
-    # Установка расписания полива для участка
-    def set_watering_schedule(self, area, spray_water):
+    # Подача воды для участка
+    def water_spray_supply(self, area, spray_water):
         if area in self.areas:
             self.areas[area]["spray_water"] = spray_water
         else:
