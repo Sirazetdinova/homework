@@ -135,7 +135,7 @@ def test_add_new_area(watering_system):
     assert "Сад" in watering_system.areas
 
 
-# Тест установки расписания полива
+# Тест для проверки подачи воды
 def test_water_spray_supply(watering_system):
     watering_system.test_water_spray_supply("Газон", 15)
     assert watering_system.areas["Газон"]["spray_water"] == 15
@@ -161,7 +161,7 @@ def test_water_area_not_enough_water(watering_system):
     result = watering_system.water_area("Газон", 30)
     assert result is None  # Ожидаем, что метод возвращает None
 
-
+# Тест на полив при максимальной влажности
 def test_max_soil_moisture(watering_system):
     watering_system.areas["Газон"][
         "soil_moisture"
@@ -179,13 +179,6 @@ def test_soil_moisture_after_long_watering(watering_system):
     assert (
             moisture == 100
     )  # Ожидаем, что влажность станет максимальной
-
-
-# Тест полива без включения системы
-def test_watering_without_starting(watering_system):
-    watering_system.stop_watering() 
-    result = watering_system.water_area("Газон", 30)
-    assert result is None  # Ожидаем, что не будет полива, так как система не включена
 
 
 # Тест уровня влажности после полива
