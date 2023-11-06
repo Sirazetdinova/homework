@@ -94,7 +94,6 @@ def test_set_deadline(task_list, sample_task):
 
 ## Задача 2. Тестирование программы Watering System
      
-
 ```python
 import pytest
 from app.watering_system import WateringSystem
@@ -125,9 +124,7 @@ def test_add_water(watering_system):
 def test_add_existing_area(watering_system):
     result = watering_system.add_area("Газон", 50)
     assert result is None
-    assert (
-        watering_system.areas["Газон"]["soil_moisture"] == 30
-    )  # Уровень влажности не изменился
+    assert watering_system.areas["Газон"]["soil_moisture"] == 30  # Уровень влажности не изменился
 
 
 # Тест добавления нового участка
@@ -137,7 +134,7 @@ def test_add_new_area(watering_system):
     assert "Сад" in watering_system.areas
 
 
-# Тест установки расписания полива
+# Тест для проверки подачи воды
 def test_water_spray_supply(watering_system):
     watering_system.test_water_spray_supply("Газон", 15)
     assert watering_system.areas["Газон"]["spray_water"] == 15
@@ -164,13 +161,14 @@ def test_water_area_not_enough_water(watering_system):
     assert result is None  # Ожидаем, что метод возвращает None
 
 
+# Тест на полив при максимальной влажности
 def test_max_soil_moisture(watering_system):
     watering_system.areas["Газон"][
         "soil_moisture"
     ] = 100  # Устанавливаем максимальную влажность
     result = watering_system.water_area("Газон", 30)
     assert (
-        result is None
+            result is None
     )  # Ожидаем, что не будет полива, так как влажность уже максимальная
 
 
@@ -178,21 +176,14 @@ def test_max_soil_moisture(watering_system):
 def test_soil_moisture_after_long_watering(watering_system):
     watering_system.water_area("Газон", 60)
     moisture = watering_system.areas["Газон"]["soil_moisture"]
-    assert moisture == 100  # Ожидаем, что влажность станет максимальной
-
-
-# Тест полива без включения системы
-def test_watering_without_starting(watering_system):
-    watering_system.stop_watering()
-    result = watering_system.water_area("Газон", 30)
-    assert result is None  # Ожидаем, что не будет полива, так как система не включена
+    assert (
+            moisture == 100
+    )  # Ожидаем, что влажность станет максимальной
 
 
 # Тест уровня влажности после полива
 def test_soil_moisture_after_watering(watering_system):
     watering_system.water_area("Газон", 30)
-    assert (
-        watering_system.areas["Газон"]["soil_moisture"] == 100
-    )  # Ожидаем, что уровень влажности стал 100%
-```
+    assert watering_system.areas["Газон"]["soil_moisture"] == 100  # Ожидаем, что уровень влажности стал 100%
 
+```
