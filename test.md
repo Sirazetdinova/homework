@@ -12,11 +12,18 @@
 ```python
 import datetime
 
+
 class Task:
     def __init__(self, description, priority=1, deadline=None):
         self.description = description  # Описание задачи
         self.priority = priority  # Приоритет задачи (по умолчанию 1)
-        self.deadline = deadline  # Срок задачи (по умолчанию None)
+        if deadline is not None:
+            try:
+                self.deadline = datetime.datetime.strptime(deadline, "%Y-%m-%d")
+            except ValueError:
+                raise ValueError("Invalid date format. Date should be in 'YYYY-MM-DD' format.")
+        else:
+            self.deadline = None  # Срок задачи (по умолчанию None)
         self.is_completed = False
 
     def mark_completed(self):
@@ -27,6 +34,7 @@ class Task:
         status = "Completed" if self.is_completed else "Not Completed"
         deadline_info = f"Deadline: {self.deadline}" if self.deadline else "No Deadline"
         return f"Description: {self.description}\nPriority: {self.priority}\nStatus: {status}\n{deadline_info}\n"
+
 
 class TaskList:
     def __init__(self):
@@ -52,6 +60,7 @@ class TaskList:
 
     def set_deadline(self, task, deadline):
         task.deadline = deadline
+
 
 # Пример использования
 if __name__ == "__main__":
