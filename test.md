@@ -178,16 +178,6 @@ class WateringSystem:
     def add_water(self, amount):
         self.water_level += amount
 
-    def start_watering(self, area_name=None):
-        if area_name is not None:
-            print(f"Watering of the {area_name} has been started.")
-        self.is_watering = True
-
-    def stop_watering(self, area_name=None):
-        if area_name is not None:
-            print(f"The watering of the {area_name} has been completed.")
-        self.is_watering = False
-
     # Добавление нового участка для полива
     def add_area(self, area, initial_moisture):
         if area not in self.areas:
@@ -213,26 +203,41 @@ class WateringSystem:
     # Полив участка на некоторое время
     def water_area(self, area, duration):
         if area in self.areas:
-            self.start_watering(area)  # Включаем систему полива
-            water_needed = duration * self.areas[area]["spray_water"]  # Вычисляем необходимое количество воды
+            if self.is_watering:
+                print("Watering is already in progress. Wait for the current watering to complete.")
+                return  # Останавливаем выполнение метода
+            print(f"Watering of the {area} has been started.")
+            self.is_watering = True  # Включаем систему полива
+            water_needed = (
+                duration * self.areas[area]["spray_water"]
+            )  # Вычисляем необходимое количество воды
             if self.water_level >= water_needed:
                 if self.areas[area]["soil_moisture"] < 100:
                     # Если уровень влажности на участке не достиг 100%
                     self.water_level -= water_needed
-                    new_soil_moisture = self.areas[area]["soil_moisture"] + (duration * 5)
-                    self.areas[area]["soil_moisture"] = min(new_soil_moisture, 100)  # Ограничиваем влажность до 100%
+                    new_soil_moisture = self.areas[area]["soil_moisture"] + (
+                        duration * 5
+                    )
+                    self.areas[area]["soil_moisture"] = min(
+                        new_soil_moisture, 100
+                    )  # Ограничиваем влажность до 100%
                 else:
-                    print(f"Зона {area} уже имеет максимальную влажность (100%) и не требует полива.")
+                    print(
+                        f"Zone {area} already has maximum moisture (100%) and does not require watering."
+                    )
             else:
                 print(f"Not enough water to spray the area {area}")
-            self.stop_watering(area)  # Выключаем систему полива
+            print(f"The watering of the {area} has been completed.")
+            self.is_watering = False  # Выключаем систему полива
 
     # Подача воды для участка
     def water_spray_supply(self, area, spray_water):
         if area in self.areas:
             self.areas[area]["spray_water"] = spray_water
         else:
-            print(f"Area named {area} does not exist in the system. Please add a site using add_area.")
+            print(
+                f"Area named {area} does not exist in the system. Please add a site using add_area."
+            )
 
 
 if __name__ == "__main__":
